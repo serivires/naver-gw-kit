@@ -251,6 +251,10 @@ init_host_list() {
 		fi
 	done < $HOST_LIST_FILE
 	host_list=($(printf "%s\n" ${host_list[@]} | sort -u ))
+	host_descs=($(
+		for i in ${host_list[@]}; do
+		    echo "$(host_description $i)"
+		done))
 	filter_host_list
 }
  
@@ -295,10 +299,13 @@ add_host_to_list() {
 }
  
 filter_host_list() {
+        local len=${#host_list[@]}
 	filtered_host_list=($( 
-		for i in ${host_list[@]};do 
-			echo $i
-		done | grep "$hostname_filter"
+		for (( i = 0; i < $len; i++ )) do
+		     if [ -n "`echo ${host_list[i]} | grep "$hostname_filter"`" ] || [-n "`echo ${host_descs[i]} | grep "$hostname_filter"`" ]; then
+                          echo ${host_list[i]}
+                     fi
+                done
 	))
 	if [ -z `echo $selected_host | grep "$hostname_filter"` ];then
 		selected_host=

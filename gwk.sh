@@ -31,7 +31,7 @@
 #========================================
 # Constants for configuration
 #========================================
-HOST_LIST_FILE=~/.known_hosts
+HOST_LIST_FILE=~/scripts/naver-gw-kit/.known_hosts
 HOST_DISPLAY_COUNT=15
 KINIT_PW_FILE=~/.kinit_passwd
 USER_LIST_FOR_RLOGIN=(irteam irteamsu )
